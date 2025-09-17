@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Data
+data/raw/
+data/processed/
+data/tmp/
+
+# OS/IDE
+.DS_Store
+.vscode/
+.idea/
