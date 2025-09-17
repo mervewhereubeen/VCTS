@@ -6,7 +6,7 @@ labels: ''
 assignees: ''
 ---
 
-## Özet
+## Özet 
 Kısa açıklama (1-3 cümle).
 
 ## Kabul Kriterleri
