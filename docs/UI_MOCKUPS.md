@@ -1,101 +1,80 @@
-VCTS — UI Mockups (v0.1)
+# VCTS — UI Mockups (v0.1)
 
-Bu doküman; Hasta Yükleme ve Doktor Paneli ekranlarının düşük sadakat (low-fi) taslaklarını, akışını ve durumlarını tarif eder.
+Bu belge, **Hasta Yükleme** ve **Doktor Paneli** ekranlarının düşük sadakat (low-fi) taslağını **düz metin** ile tarif eder. Amaç: “ne üretilecek” sorusuna net ve sade cevap vermek.
 
-1) Hasta — Görsel Yükleme & Sonuç Kartı
-+---------------------------------------------------------------+
-|  VCTS — Virtual Chemotherapy Tracking System                  |
-+---------------------------------------------------------------+
-|  [ Yeni Görsel Yükle ]  (jpg/png)                             |
-|                                                               |
-|  Önizleme Alanı:                                              |
-|  +---------------------------------------------------------+  |
-|  |  (Seçilen görsel küçük önizleme)                       |  |
-|  +---------------------------------------------------------+  |
-|                                                               |
-|  [ İşle ]  ->  (loader/spinner)                               |
-|                                                               |
-|  Sonuç Kartı (işlem sonrası):                                 |
-|  +---------------------------------------------------------+  |
-|  |  Risk: YÜKSEK / ORTA / DÜŞÜK                            |  |
-|  |  Skor: 0.70                                             |  |
-|  |  Not: Aydınlatma düşükse yeniden çekiniz.               |  |
-|  |  Zaman: 2025-09-17 21:10                                |  |
-|  +---------------------------------------------------------+  |
-|                                                               |
-|  [ Yeni Görsel ]     [ Yardım / Çekim Rehberi ]               |
-+---------------------------------------------------------------+
+---
 
+## 1) Hasta — Görsel Yükleme & Sonuç Kartı
 
-Durumlar
+**Ekran yapısı**
+- Üst başlık: “VCTS — Virtual Chemotherapy Tracking System”
+- Birincil buton: **Yeni Görsel Yükle (jpg/png)**
+- Önizleme alanı: seçilen görselin küçük önizlemesi
+- Birincil buton: **İşle** (yükleme/işleme başlatır)
+- Sonuç kartı:
+  - **Risk:** YÜKSEK / ORTA / DÜŞÜK
+  - **Skor:** ör. 0.70
+  - **Açıklama:** ör. “Aydınlatma düşükse yeniden çekiniz.”
+  - **Zaman damgası**
 
-Boş → görsel seçilmemiş
+**Durumlar**
+- Boş: görsel seçilmedi
+- Yükleniyor: işlem sırasında loader/spinner
+- Başarılı: risk etiketi + skor + kısa öneri
+- Hata: “Yüz tespit edilemedi / ışık yetersiz” → “Çekim Rehberi”ne yönlendirme
 
-Yükleniyor → spinner
+**Çekim Rehberi (kısa)**
+- Doğal ışık, nötr arka plan, kamera sabit
+- Yüz tam karşıdan; ağız/dudak için yakın plan
 
-Başarılı → risk etiketi + skor + kısa öneri
+---
 
-Hata → “Yüz tespit edilemedi / ışık yetersiz” uyarısı
+## 2) Doktor — Panel & Listeleme
 
-Çekim Rehberi (kısa)
+**Sayfa bölümleri**
+- Sol panel (filtreler):
+  - Arama kutusu
+  - Tarih aralığı seçimi
+  - Risk filtresi (Düşük/Orta/Yüksek)
+  - Hasta listesi (ID + uyarı sayısı)
+- Üst uyarılar (yüksek riskli son kayıtlar)
+- Sağ panel (seçili hasta):
+  - Son 10 sonuç (tarih | risk)
+  - Kayıt detayı: küçük görsel önizleme, risk/skor, kısa not
 
-Doğal ışık, nötr arka plan, kamera sabit
+**Eylemler**
+- Listeden hasta seç → sağ panel güncellenir
+- Filtrelere göre liste ve sonuçlar yenilenir
+- Kayıt detayında küçük önizleme görüntülenir
 
-Yüz tam karşıdan; ağız/dudak için yakın plan
+---
 
-2) Doktor — Panel & Listeleme
-+---------------------------------------------------------------+
-|  VCTS — Doctor Dashboard                                      |
-+---------------------------------------------------------------+
-|  Sol Panel (Filtreler)              |  Sağ Panel (Seçili Hasta)|
-|  ---------------------------------  |  ------------------------|
-|  [Arama] [Tarih] [Risk]             |  Hasta: #PT-001          |
-|  Hasta Listesi:                     |  Sonuçlar (son 10):      |
-|   • #PT-001  (2 uyarı)              |   2025-09-17 | ORTA      |
-|   • #PT-002                         |   2025-09-15 | DÜŞÜK     |
-|   • #PT-003                         |   2025-09-12 | YÜKSEK    |
-|                                     |  Kayıt Detayı:           |
-|  Üst Uyarılar:                      |  +---------------------+  |
-|   ! #PT-012 — YÜKSEK (24s)          |  | Önizleme (küçük)   |  |
-|   ! #PT-034 — YÜKSEK (48s)          |  | Risk: ORTA | 0.70  |  |
-|                                     |  | Not: Işık düşük…   |  |
-|                                     |  +---------------------+  |
-+---------------------------------------------------------------+
+## 3) Kullanıcı Akışları (özet)
 
+**Hasta akışı**
+1. Görsel yükle
+2. İşle → Sonuç kartını gör
+3. Gerekirse “Çekim Rehberi”
+4. Yeni görsel yükle
 
-Eylemler
+**Doktor akışı**
+1. Paneli aç → Üst uyarılara bak (YÜKSEK risk)
+2. Hasta seç → Son 10 kaydı gör
+3. Kayıt detayını aç → önizleme + not
 
-Sol listeden hasta seç → sağ panel güncellenir
+---
 
-Filtreler: tarih aralığı, risk düzeyi
+## 4) Durum/Boş Hali Mesajları
+- Boş liste: “Bu aralıkta kayıt yok.”
+- Ağ hatası: “Sunucuya ulaşılamıyor. Lütfen tekrar deneyin.”
+- Geçersiz format: “Sadece .jpg/.png kabul ediliyor.”
 
-Detayda küçük görsel önizleme
+## 5) Erişilebilirlik (A11y) Notları
+- Tüm butonlar klavye ile erişilebilir olmalı
+- Risk etiketi sadece renkle değil **ikon + metin** ile de belirtilmeli (ör. “YÜKSEK ⚠”)
+- Görsel `alt` metni: “Yüz önizleme — tarih/saat”
 
-3) Kullanıcı Akışları (özet)
-
-Hasta: Görsel yükle → İşle → Sonuç kartını gör → Gerekirse rehber → Yeni görsel
-Doktor: Üst uyarılara bak → Hasta seç → Son 10 kayıt → Detay incele
-
-4) Durum/Boş Hali Mesajları
-
-Boş Liste: “Bu aralıkta kayıt yok.”
-
-Ağ Hatası: “Sunucuya ulaşılamıyor. Lütfen tekrar deneyin.”
-
-Geçersiz Format: “Sadece .jpg/.png kabul ediliyor.”
-
-5) Erişilebilirlik (A11y) Notları
-
-Butonlar klavye ile erişilebilir olmalı
-
-Risk etiketi yalnız renk değil ikon + metin ile de ifade edilmeli (örn. YÜKSEK !)
-
-Görsel alt metni: “Yüz önizleme — tarih/saat”
-
-6) Tema (MVP)
-
-Basit, kontrastı yüksek, kart tabanlı
-
-Başlıklar H2/H3; içerikte düzenli listeler
-
-Primary buton: “İşle” / “Filtrele”
+## 6) Tema (MVP)
+- Basit, yüksek kontrastlı, kart tabanlı düzen
+- Başlıklar H2/H3; içerik listeler ve net etiketler
+- Primary butonlar: “İşle” (hasta), “Filtrele” (doktor)
